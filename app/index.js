@@ -37,8 +37,13 @@ const fetchStoveStatus = async (mqttClient) => {
 }
 
 const main = async () => {
+  console.log(`connecting to mqtt ${mqttBrokerUrl}`)
   const mqttClient = await MQTT.connectAsync(mqttBrokerUrl, mqttOptions, true)
+  console.log('connected')
+
   fetchStoveStatus(mqttClient)
 }
 
 main()
+
+
