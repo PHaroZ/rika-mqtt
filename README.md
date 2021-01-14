@@ -6,10 +6,10 @@ Configuration should be done via environment variables :
 
 | name | default | description |
 | ---- | ------- | ----------- |
+| REFRESH_RATE | `60` | delay, in seconds, between 2 refresh |
 | RIKA_USERNAME |  | username/email to login to firenet |
 | RIKA_PASSWORD |  | password relative to `RIKA_USERNAME` |
 | RIKA_STOVE_ID |  | ID of the stove to manage in firenet. can be found in the url like `https://www.rika-firenet.com/web/stove/<RIKA_STOVE_ID>` |
-| RIKA_REFRESH_RATE | `60` | delay, in seconds, between 2 refresh |
 | MQTT_BROKER_URL | `tcp://mqtt:1883` | broker URL of the target MQTT server |
 | MQTT_USERNAME |  | username for authentification on MQTT server, if any |
 | MQTT_PASSWORD |  | password relative to `MQTT_USERNAME` |
