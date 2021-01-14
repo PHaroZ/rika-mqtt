@@ -8,8 +8,8 @@ const stove = new RikaStove({
   password: process.env.RIKA_PASSWORD,
   stoveId: process.env.RIKA_STOVE_ID,
 })
-const refreshRate = (process.env.RIKA_REFRESH_RATE || 10) * 1000
-const mqttBrokerUrl = process.env.MQTT_BROKER_URL || "tcp://mosquitto:1883"
+const refreshRate = (process.env.RIKA_REFRESH_RATE || 60) * 1000
+const mqttBrokerUrl = process.env.MQTT_BROKER_URL || "tcp://mqtt:1883"
 const mqttTopicOut = process.env.MQTT_TOPIC_OUT || "rika/out"
 const mqttOptions = {
   username: process.env.MQTT_USERNAME,
