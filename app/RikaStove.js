@@ -1,38 +1,36 @@
 const util = require('util')
+const log = require("loglevel")
 const request = require('request').defaults({jar: true})
 
 class RikaStove {
-  constructor(config) {
-    this.config = config
-  }
-
-  log(...args) {
-    // console.log(...args);
+  constructor(conf) {
+    this.conf = conf
   }
 
   async login() {
-    this.log("connecting to Firenet... ")
+    log.debug(`connecting as ${this.conf.username} ... `)
     try {
       const {body} = await util.promisify(request.post)({
         url: 'https://www.rika-firenet.com/web/login',
-        form: {email: this.config.username, password: this.config.password}
+        form: {email: this.conf.username, password: this.conf.password}
       })
       if (body.indexOf("summary") < 0) {
         throw new Error(`authentication rejected: ${body}`)
       }
+      log.debug('connected')
     } catch (error) {
-      throw new Error(`fail to connect to Firenet: ${error}`)
+      throw new Error(`fail to connect: ${error}`)
     }
   }
 
   async getStatus() {
-    this.log("retrieving stove status...")
+    log.trace("retrieving stove status...")
     const {
       body,
       ...response
-    } = await util.promisify(request.get)({url: `https://www.rika-firenet.com/api/client/${this.config.stoveId}/status`})
-    if (response.statusCode === 200 && body.indexOf(this.config.stoveId) > -1) {
-      this.log("status retrieved")
+    } = await util.promisify(request.get)({url: `https://www.rika-firenet.com/api/client/${this.conf.stoveId}/status`})
+    if (response.statusCode === 200 && body.indexOf(this.conf.stoveId) > -1) {
+      log.trace("status retrieved")
       const json = JSON.parse(body);
 
       return {
@@ -43,7 +41,7 @@ class RikaStove {
         revision: json.controls.revision,
       }
     } else if (response.statusCode === 401) {
-      this.log("login required")
+      log.trace("login required")
       await this.login()
       return await this.getStatus()
     } else if (response.statusCode === 500) {

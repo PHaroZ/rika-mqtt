@@ -1,26 +1,29 @@
-'use strict'
-
+const log = require("loglevel")
 const MQTT = require("async-mqtt")
 const RikaStove = require('./RikaStove')
 const loadConf = require('./loadConf')
 
+log.setDefaultLevel(log.levels[process.env.LOG_LEVEL?.toUpperCase()] ?? log.levels.INFO)
+
 const main = async () => {
-  console.log('building conf ...')
+
+
+  log.info('building conf ...')
   const conf = loadConf()
-  console.log('conf ok')
+  log.info('conf ok')
 
   const stove = new RikaStove(conf.stove)
 
-  console.log(`connecting to mqtt ${conf.mqtt.brokerUrl} ...`)
+  log.info(`connecting to mqtt ${conf.mqtt.brokerUrl} ...`)
   const mqtt = await MQTT.connectAsync(conf.mqtt.brokerUrl, conf.mqtt.options, true)
-  console.log('connected')
+  log.info('connected')
 
   await fetchStoveStatus({conf, stove, mqtt})
 }
 
 main()
   .catch(err => {
-    console.error(err)
+    log.error(err)
     process.exitCode = 1
   })
 
@@ -29,17 +32,17 @@ const fetchStoveStatus = async (args) => {
   let status
   try {
     status = await stove.getStatus()
-    console.log(status)
+    log.trace(status)
   } catch (e) {
-    console.error('fail to get status')
-    console.error(e)
+    log.warn('fail to get status')
+    log.warn(e)
   }
   try {
     await mqtt.publish(conf.mqtt.topicOut, JSON.stringify(status))
-    console.log(`message published to ${conf.mqtt.topicOut}`)
+    log.trace(`message published to ${conf.mqtt.topicOut}`)
   } catch (e) {
-    console.error('fail to publish to mqtt')
-    console.error(e)
+    log.warn('fail to publish to mqtt')
+    log.warn(e)
   }
   setTimeout(fetchStoveStatus, conf.refreshRate, args)
 }

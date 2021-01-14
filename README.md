@@ -6,6 +6,7 @@ Configuration should be done via environment variables :
 
 | name | default | description |
 | ---- | ------- | ----------- |
+| LOG_LEVEL | `info` | a logging level among `trace`/`debug`/`info`/`warn`/`error` |
 | REFRESH_RATE | `60` | delay, in seconds, between 2 refresh |
 | RIKA_USERNAME |  | username/email to login to firenet |
 | RIKA_PASSWORD |  | password relative to `RIKA_USERNAME` |
