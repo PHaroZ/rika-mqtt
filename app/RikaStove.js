@@ -34,11 +34,12 @@ class RikaStove {
       const json = JSON.parse(body);
 
       return {
-        active: !(json.controls.statusMainState === 0 && json.controls.statusSubState === 1),
+        active: !(json.sensors.statusMainState === 0 && json.sensors.statusSubState === 1),
         targetTemperature: Number(json.controls.targetTemperature),
         currentTemperature: Number(json.sensors.inputRoomTemperature),
         state: this.computeState(json),
         revision: json.controls.revision,
+        raw: json
       }
     } else if (response.statusCode === 401) {
       log.trace("login required")
