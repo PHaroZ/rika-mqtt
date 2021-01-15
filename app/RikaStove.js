@@ -35,11 +35,12 @@ class RikaStove {
 
       return {
         active: !(json.sensors.statusMainState === 0 && json.sensors.statusSubState === 1),
+        state: this.computeState(json),
         targetTemperature: Number(json.controls.targetTemperature),
         currentTemperature: Number(json.sensors.inputRoomTemperature),
-        state: this.computeState(json),
-        revision: json.controls.revision,
-        raw: json
+        totalConsumedPellet: json.sensors.parameterFeedRateTotal,
+        pelletConsumptionBeforeSerice: json.sensors.parameterFeedRateService,
+        revision: json.controls.revision
       }
     } else if (response.statusCode === 401) {
       log.trace("login required")
