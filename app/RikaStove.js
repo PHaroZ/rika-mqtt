@@ -36,6 +36,7 @@ class RikaStove {
       return {
         active: !(json.sensors.statusMainState === 0 && json.sensors.statusSubState === 1),
         state: this.computeState(json),
+        heatingPower: json.controls.heatingPower,
         targetTemperature: Number(json.controls.targetTemperature),
         currentTemperature: Number(json.sensors.inputRoomTemperature),
         totalConsumedPellet: json.sensors.parameterFeedRateTotal,
