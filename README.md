@@ -2,6 +2,12 @@
 
 A gateway which regularly connects to [Rika Firenet](https://www.rika-firenet.com/) to retrieve a stove status and publish it on MQTT.
 
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/PHaroz/rika-mqtt/Build)
+![Docker Pulls](https://img.shields.io/docker/pulls/pharoz/rika-mqtt)
+![Docker Image Size (tag)](https://img.shields.io/docker/image-size/pharoz/rika-mqtt/latest)
+
+## Info
+
 Published message looks like :
 
 ```json
