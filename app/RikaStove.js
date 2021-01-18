@@ -33,10 +33,11 @@ class RikaStove {
       log.trace("status retrieved")
       const json = JSON.parse(body);
 
+      const state = this.computeState(json);
       return {
-        active: !(json.sensors.statusMainState === 0 && json.sensors.statusSubState === 1),
-        state: this.computeState(json),
-        heatingPower: json.controls.heatingPower,
+        active: state !== 'inactive',
+        state,
+        heatingPower: state === 'heating' ? json.controls.heatingPower : 0,
         targetTemperature: Number(json.controls.targetTemperature),
         currentTemperature: Number(json.sensors.inputRoomTemperature),
         totalConsumedPellet: json.sensors.parameterFeedRateTotal,
