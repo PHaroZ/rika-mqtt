@@ -1,4 +1,4 @@
-FROM node:14.13-stretch
+FROM node:14.13-slim
 
 WORKDIR /opt/project
 
