@@ -2,6 +2,21 @@
 
 A gateway which regularly connects to [Rika Firenet](https://www.rika-firenet.com/) to retrieve a stove status and publish it on MQTT.
 
+Published message looks like :
+
+```json
+{
+  "state": "idle", // inactive/idle/heating
+  "active": true,
+  "heatingPower": 75, // 0 to 100, 0 when state!=='heating'
+  "targetTemperature": 19,
+  "currentTemperature": 20.2,
+  "totalConsumedPellet": 1016,
+  "pelletConsumptionBeforeService": 450,
+  "revision": 1610953312
+}
+```
+
 Configuration should be done via environment variables :
 
 | name | default | description |
