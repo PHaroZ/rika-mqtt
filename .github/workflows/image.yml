@@ -36,3 +36,9 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: pharoz/rika-mqtt:latest,pharoz/rika-mqtt:${{ steps.extract_version.outputs.version }}
+      -
+        name: Update repo description
+        uses: peter-evans/dockerhub-description@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
