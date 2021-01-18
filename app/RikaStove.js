@@ -41,7 +41,7 @@ class RikaStove {
         targetTemperature: Number(json.controls.targetTemperature),
         currentTemperature: Number(json.sensors.inputRoomTemperature),
         totalConsumedPellet: json.sensors.parameterFeedRateTotal,
-        pelletConsumptionBeforeSerice: json.sensors.parameterFeedRateService,
+        pelletConsumptionBeforeService: json.sensors.parameterFeedRateService,
         revision: json.controls.revision
       }
     } else if (response.statusCode === 401) {
